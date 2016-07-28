@@ -31,7 +31,7 @@ export default function wrapComponent(tagName) {
 
     componentWillReceiveProps(nextProps) {
       Object.keys(nextProps).forEach(rawKey => {
-        if (rawKey.indexOf('on') === 0 && typeof props[rawKey] === 'function') {
+        if (rawKey.indexOf('on') === 0) {
           if (this.props[rawKey] !== nextProps[rawKey]) {
             // function is modified or added
             let domKey = rawKey.toLowerCase().substring(2);
@@ -49,7 +49,7 @@ export default function wrapComponent(tagName) {
               );
             }
 
-            if (nextProps[rawKey]) {
+            if (nextProps[rawKey] && typeof nextProps[rawKey] === 'function') {
               this._element.addEventListener(
                 domKey,
                 nextProps[rawKey],
