@@ -6,12 +6,12 @@ export default function serializeProps (props) {
   Object.keys(props).forEach(key => {
     if (['children', 'mixin'].indexOf(key) !== -1) { return; }
 
-    if (props[key].constructor === Function) { return; }
+    if (typeof props[key] === 'function') { return; }
 
-    if (props[key].constructor === Array) {
+    if (Array.isArray(props[key])) {
       //Stringify components passed as array.
       serialProps[key] = props[key].join(' ');
-    } else if (props[key].constructor === Object) {
+    } else if (typeof props[key] === 'object') {
       // Stringify components passed as object.
       serialProps[key] = styleParser.stringify(props[key]);
     } else {

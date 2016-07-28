@@ -11,7 +11,7 @@ export default function wrapComponent(tagName) {
       if (!this._element) {
         const {props} = this;
         Object.keys(props).forEach(rawKey => {
-          if (props[rawKey].constructor === Function && rawKey.indexOf('on') === 0) {
+          if (rawKey.indexOf('on') === 0 && typeof props[rawKey] === 'function') {
             const key = rawKey.toLowerCase();
             // its a event
             if (key.indexOf('capture') > 0) {
@@ -31,7 +31,7 @@ export default function wrapComponent(tagName) {
 
     componentWillReceiveProps(nextProps) {
       Object.keys(nextProps).forEach(rawKey => {
-        if (nextProps[rawKey].constructor === Function && rawKey.indexOf('on') === 0) {
+        if (rawKey.indexOf('on') === 0 && typeof props[rawKey] === 'function') {
           if (this.props[rawKey] !== nextProps[rawKey]) {
             // function is modified or added
             let domKey = rawKey.toLowerCase().substring(2);
